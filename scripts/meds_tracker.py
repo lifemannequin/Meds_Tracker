@@ -36,7 +36,7 @@ try:
     dbx = dropbox.Dropbox(
         oauth2_refresh_token=str(REFRESH_TOKEN),
         app_key=str(APP_KEY),
-        app_secret=str(APP_SECRET),
+        app_secret=str(APP_SECRET)
     )
     access_token = dbx._oauth2_access_token
     #print(f"New access token: {access_token}")
