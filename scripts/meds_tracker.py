@@ -22,26 +22,35 @@ from google.cloud import secretmanager
 from io import BytesIO
 
 # Read the Dropbox token from a file in your GitHub repo
-DROPBOX_ACCESS_TOKEN = os.getenv("MEDS_TOKEN")
+# App credentials
+APP_KEY = os.getenv("DROPBOX_APP_KEY")
+APP_SECRET = os.getenv("DROPBOX_APP_SECRET")
+REFRESH_TOKEN = os.getenv("DROPBOX_REFRESH_TOKEN")
 
-if DROPBOX_ACCESS_TOKEN:
-    masked_token = f"{DROPBOX_ACCESS_TOKEN[:4]}...{DROPBOX_ACCESS_TOKEN[-4:]}"
-    print(f"Dropbox token (masked): {masked_token}")
-if not DROPBOX_ACCESS_TOKEN:
-    print("Dropbox token is missing!")
-    exit(1)  # Exit if the token is not found
+if not all([APP_KEY, APP_SECRET, REFRESH_TOKEN]):
+    print("Missing environment variables!")
+    exit(1)
+
+# Use the refresh token to get a new access token
+try:
+    dbx = dropbox.Dropbox(
+        oauth2_refresh_token=REFRESH_TOKEN,
+        app_key=APP_KEY,
+        app_secret=APP_SECRET,
+    )
+    access_token = dbx._oauth2_access_token
+    #print(f"New access token: {access_token}")
+except Exception as e:
+    print(f"Error: {e}")
     
-# Initialize Dropbox client
-dbx = dropbox.Dropbox(DROPBOX_ACCESS_TOKEN)
-
 # Setting up logging
 # Path to the file in Dropbox
 log_file= 'meds_tracker.log'
 
 DROPBOX_FILE_PATH_log = f"/{log_file}"
 
-if DROPBOX_ACCESS_TOKEN:
-    dbx = dropbox.Dropbox(DROPBOX_ACCESS_TOKEN)
+if access_token:
+    dbx = dropbox.Dropbox(access_token)
     try:
         metadata, res = dbx.files_download("/meds_tracker.log")
         with open(log_file, "wb") as f:
