@@ -34,9 +34,9 @@ if not all([APP_KEY, APP_SECRET, REFRESH_TOKEN]):
 # Use the refresh token to get a new access token
 try:
     dbx = dropbox.Dropbox(
-        oauth2_refresh_token=REFRESH_TOKEN,
-        app_key=APP_KEY,
-        app_secret=APP_SECRET,
+        oauth2_refresh_token=f"{REFRESH_TOKEN}",
+        app_key=f"{APP_KEY}",
+        app_secretf"{=APP_SECRET}"
     )
     access_token = dbx._oauth2_access_token
     #print(f"New access token: {access_token}")
