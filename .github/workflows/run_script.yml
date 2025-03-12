@@ -1,0 +1,37 @@
+name: Run Script
+
+on:
+  schedule:
+    - cron: '0 10 * * *'  # Runs daily at 10 AM UTC
+  workflow_dispatch:  # Allows manual triggering
+
+jobs:
+  refresh_and_run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt  # Install necessary Python libraries
+
+      - name: Authenticate with Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GOOGLE_SERVICE }}  # Use the JSON key from GitHub Secrets
+          
+      - name: Run Python Script
+        env:
+          ACCOUNTS:  ${{ secrets.ACCOUNTS }}
+          SENDER:  ${{ secrets.SENDER }}
+          SENDER_CREDS:  ${{ secrets.SENDER_CREDS }}
+          MEDS_TOKEN:  ${{ secrets.MEDS_TOKEN }}}
+        run: python meds_tracker.py
+
+     
