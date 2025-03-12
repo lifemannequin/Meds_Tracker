@@ -53,6 +53,7 @@ jobs:
           DROPBOX_APP_KEY:  ${{ secrets.DROPBOX_APP_KEY }}}
           DROPBOX_APP_SECRET:  ${{ secrets.DROPBOX_APP_SECRET }}}
           DROPBOX_APP_REFRESH_TOKEN:  ${{ secrets.DROPBOX_APP_REFRESH_TOKEN }}}
+          GOOGLE_SERVICE : ${{ secrets.GOOGLE_SERVICE }}}
         run: python scripts/meds_tracker.py
         
       - name: Upload debug logs (if script fails)
