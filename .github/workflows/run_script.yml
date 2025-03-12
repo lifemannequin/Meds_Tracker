@@ -26,8 +26,15 @@ jobs:
 
       - name: Install dependencies
         run: pip install -r $GITHUB_WORKSPACE/requirements.txt  # Install necessary Python libraries
+  
+      - name: Test DNS resolution
+        run: |
+          nslookup api.dropboxapi.com
 
-        
+      - name: Test connectivity with curl
+        run: |
+          curl -I https://api.dropboxapi.com
+          
       - name: Test internet access
         run: |
            ping -c 3 api.dropboxapi.com
