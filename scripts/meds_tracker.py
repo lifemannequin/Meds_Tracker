@@ -23,15 +23,18 @@ from io import BytesIO
 
 # Read the Dropbox token from a file in your GitHub repo
 DROPBOX_ACCESS_TOKEN = os.getenv("MEDS_TOKEN")
-
+if not DROPBOX_ACCESS_TOKEN:
+    print("Dropbox token is missing!")
+    exit(1)  # Exit if the token is not found
+    
 # Initialize Dropbox client
 dbx = dropbox.Dropbox(DROPBOX_ACCESS_TOKEN)
 
 # Setting up logging
 # Path to the file in Dropbox
-DROPBOX_FILE_PATH_log = "/meds_tracker.log"
-
 log_file= 'meds_tracker.log'
+
+DROPBOX_FILE_PATH_log = f"/{log_file}"
 
 if DROPBOX_ACCESS_TOKEN:
     dbx = dropbox.Dropbox(DROPBOX_ACCESS_TOKEN)
@@ -171,10 +174,9 @@ def send_email(email, subject, body):
     service = build("gmail", "v1", credentials=creds)
     
     # Getting sender email
-    sender_path = os.getenv("SENDER")
     try:
         # Parse the sender JSON
-        sender_email = json.loads(sender_path)
+        sender_email = os.getenv("SENDER")
     except json.JSONDecodeError as e:
         logging.error(f"Failed to parse sender JSON: {e}")
         raise
