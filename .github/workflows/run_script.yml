@@ -12,6 +12,12 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Ensure the full repo is cloned
+
+      - name: Debug file paths
+        run: ls -r  # List all files to check if requirements.txt exists
+
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -19,7 +25,7 @@ jobs:
           python-version: '3.12'
 
       - name: Install dependencies
-        run: pip install -r requirements.txt  # Install necessary Python libraries
+        run: pip install -r $GITHUB_WORKSPACE/requirements.txt  # Install necessary Python libraries
 
       - name: Authenticate with Google Cloud
         uses: google-github-actions/auth@v1
@@ -32,7 +38,7 @@ jobs:
           SENDER:  ${{ secrets.SENDER }}
           SENDER_CREDS:  ${{ secrets.SENDER_CREDS }}
           MEDS_TOKEN:  ${{ secrets.MEDS_TOKEN }}}
-        run: python meds_tracker.py
+        run: python scripts/meds_tracker.py
         
       - name: Upload debug logs (if script fails)
         if: failure()
