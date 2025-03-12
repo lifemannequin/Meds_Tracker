@@ -35,10 +35,10 @@ jobs:
         run: |
           curl -I https://api.dropboxapi.com
           
-      - name: Test internet access
-        run: |
-           ping -c 3 api.dropboxapi.com
-           curl -I https://api.dropboxapi.co
+      #- name: Test internet acces
+       # run: |
+        #   ping -c 3 api.dropboxapi.com
+         #  curl -I https://api.dropboxapi.co
 
       - name: Authenticate with Google Cloud
         uses: google-github-actions/auth@v1
