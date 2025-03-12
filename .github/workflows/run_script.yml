@@ -27,6 +27,12 @@ jobs:
       - name: Install dependencies
         run: pip install -r $GITHUB_WORKSPACE/requirements.txt  # Install necessary Python libraries
 
+        
+      - name: Test internet access
+        run: |
+           ping -c 3 api.dropboxapi.com
+           curl -I https://api.dropboxapi.co
+
       - name: Authenticate with Google Cloud
         uses: google-github-actions/auth@v1
         with:
