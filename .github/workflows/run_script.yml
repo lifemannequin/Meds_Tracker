@@ -12,6 +12,12 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Ensure the full repo is cloned
+
+      - name: Debug file paths
+        run: ls -R $GITHUB_WORKSPACE  # List all files to check if requirements.txt exists
+
 
       - name: Set up Python
         uses: actions/setup-python@v4
