@@ -19,7 +19,7 @@ jobs:
           python-version: '3.12'
 
       - name: Install dependencies
-        run: pip install -r requirements.txt  # Install necessary Python libraries
+        run: pip install -r $GITHUB_WORKSPACE/requirements.txt  # Install necessary Python libraries
 
       - name: Authenticate with Google Cloud
         uses: google-github-actions/auth@v1
