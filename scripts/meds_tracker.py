@@ -22,8 +22,7 @@ from google.cloud import secretmanager
 from io import BytesIO
 
 # Read the Dropbox token from a file in your GitHub repo
-dropbox_json = os.getenv("MEDS_TOKEN")
-DROPBOX_ACCESS_TOKEN = json.loads(dropbox_json)
+DROPBOX_ACCESS_TOKEN = os.getenv("MEDS_TOKEN")
 
 # Initialize Dropbox client
 dbx = dropbox.Dropbox(DROPBOX_ACCESS_TOKEN)
