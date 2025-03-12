@@ -32,7 +32,7 @@ jobs:
           SENDER:  ${{ secrets.SENDER }}
           SENDER_CREDS:  ${{ secrets.SENDER_CREDS }}
           MEDS_TOKEN:  ${{ secrets.MEDS_TOKEN }}}
-        run: python meds_tracker.py
+        run: python scripts/meds_tracker.py
         
       - name: Upload debug logs (if script fails)
         if: failure()
