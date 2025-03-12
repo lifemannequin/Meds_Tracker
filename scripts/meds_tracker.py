@@ -23,6 +23,10 @@ from io import BytesIO
 
 # Read the Dropbox token from a file in your GitHub repo
 DROPBOX_ACCESS_TOKEN = os.getenv("MEDS_TOKEN")
+
+if DROPBOX_ACCESS_TOKEN:
+    masked_token = f"{DROPBOX_ACCESS_TOKEN[:4]}...{DROPBOX_ACCESS_TOKEN[-4:]}"
+    print(f"Dropbox token (masked): {masked_token}")
 if not DROPBOX_ACCESS_TOKEN:
     print("Dropbox token is missing!")
     exit(1)  # Exit if the token is not found
