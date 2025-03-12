@@ -39,7 +39,7 @@ DROPBOX_FILE_PATH_log = f"/{log_file}"
 if DROPBOX_ACCESS_TOKEN:
     dbx = dropbox.Dropbox(DROPBOX_ACCESS_TOKEN)
     try:
-        metadata, res = dbx.files_download(f"/{log_file}")
+        metadata, res = dbx.files_download("/meds_tracker.log")
         with open(log_file, "wb") as f:
             f.write(res.content)
         print("Existing log file downloaded from Dropbox.")
