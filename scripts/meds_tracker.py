@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-Meds_tracker allows multiple user to track the medications they are tacking and 
-get an email notification when they are running out.
+Meds_tracker allows multiple users to track the medications they are taking and 
+sends an email notification when the number of days left of medications is 10. 
+The initial file has the account name, name of the medication, number of pills per boxes available,
+number of medications taken a day and when the available pills per medication were started.
+Upon reaching 0 days, the program updates the file with the current date for the start date value 
+and the countdown starts again
 """
 
 import os
@@ -278,9 +282,9 @@ except json.JSONDecodeError as e:
 
 # Check remaining pills and send reminders
 for index, row in data.iterrows():
-    remaining_pills = int((row["N_pills"] - pills_taken[index])/row['pills_per_day'])
+    remaining_days = int((row["N_pills"] - pills_taken[index])/row['pills_per_day'])
     
-    if remaining_pills == 10:
+    if remaining_days == 10:
         email = jmespath.search(f" [?name == '{row['Acc_name']}'].email",accounts_info)
         if is_valid_email(email[0]):
             body = f"Reminder: You have only {remaining_pills} pills left for {row['Med_name']}."
@@ -288,8 +292,8 @@ for index, row in data.iterrows():
         else:
             logging.warning(f"Skipping invalid email: {email}")
     else:
-        logging.info(f"Medication {row['Med_name']} has {remaining_pills} pills left—no reminder needed.")
-    if remaining_pills == 0:
+        logging.info(f"Medication {row['Med_name']} has {remaining_pills} days left—no reminder needed.")
+    if remaining_days == 0:
         data.loc[index,'start_date'] = today
         logging.info(f"{row['Med_name']} has been changed")
         print((f"{row['Med_name']} has been changed"))
