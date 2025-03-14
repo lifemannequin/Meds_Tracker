@@ -60,6 +60,8 @@ if access_token:
         print("Existing log file downloaded from Dropbox.")
     except dropbox.exceptions.ApiError:
         print("No previous log found. Starting fresh.")
+        with open(log_file, "wb") as f:
+            f.write(b"")  # Empty log file created
 
 try:
     # Download the file from Dropbox
