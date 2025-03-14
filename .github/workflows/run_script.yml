@@ -35,8 +35,8 @@ jobs:
       - name: print secrets
         env:
             MY_SECRET: ${{secrets.DROPBOX_APP_KEY}}
-           shell: bash
-          run: |
+            shell: bash
+        run: |
               echo "$MY_SECRET" >> config.ini
               cat config.ini
 
