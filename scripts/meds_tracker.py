@@ -30,18 +30,7 @@ REFRESH_TOKEN = os.getenv("DROPBOX_REFRESH_TOKEN")
 if not all([APP_KEY, APP_SECRET, REFRESH_TOKEN]):
     print("Missing environment variables!")
     exit(1)
-print('check key')
-expected_key = 'x66sj7ilqnzxpf0'
-print(f"Expected Key Length: {len(expected_key)}")
-print(f"Received Key Length: {len(APP_KEY)}")
 
-# Print byte representations
-print("Expected Key Bytes:", list(expected_key.encode()))
-print("Received Key Bytes:", list(APP_KEY.encode()))
-
-# Print repr to catch non-printable characters
-print(f"Expected Key (repr): {repr(expected_key)}")
-print(f"Received Key (repr): {repr(APP_KEY)}")
 # Use the refresh token to get a new access token
 try:
     dbx = dropbox.Dropbox(
@@ -282,7 +271,7 @@ except json.JSONDecodeError as e:
 for index, row in data.iterrows():
     remaining_pills = (row["N_pills"] - pills_taken[index])/row['pills_per_day']
     
-    if remaining_pills == 10:
+    if remaining_pills == 14:
         email = jmespath.search(f" [?name == '{row['Acc_name']}'].email",accounts_info)
         if is_valid_email(email[0]):
             body = f"Reminder: You have only {remaining_pills} pills left for {row['Med_name']}."
