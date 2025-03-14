@@ -334,5 +334,5 @@ except Exception as e:
 # updating log file to dropbox
 with open(log_file, "rb") as f:
      dbx.files_upload(f.read(), f"/{log_file}", mode=dropbox.files.WriteMode("overwrite"))
-    logging.info("Updated log file uploaded to Dropbox.")
+     logging.info("Updated log file uploaded to Dropbox.")
 
