@@ -32,8 +32,6 @@ jobs:
         with:
           credentials_json: ${{ secrets.GOOGLE_SERVICE }}  # Use the JSON key from GitHub Secret
       
-
-
       - name: Run Python Script
         env:
           ACCOUNTS:  ${{ secrets.ACCOUNTS }}
