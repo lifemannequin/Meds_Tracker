@@ -282,6 +282,8 @@ for index, row in data.iterrows():
         logging.info(f"Medication {row['Med_name']} has {remaining_pills} pills left—no reminder needed.")
     if remaining_pills == 0:
         data.loc[index,'start_date'] = today
+        logging.info(f"{row['Med_name']*} has been changed")
+        print((f"{row['Med_name']*} has been changed"))
         
 #Make sure start_date is in the correct format
 data['start_date'] = data['start_date'].dt.strftime("%d-%m-%Y")
