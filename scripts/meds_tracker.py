@@ -54,35 +54,18 @@ if access_token:
     print('it is doing')
     dbx = dropbox.Dropbox(access_token)
     print('access token done')
-    try:
-        metadata, res = dbx.files_download("/meds_tracker.log")
-        print('getting log')
-        with open(log_file, "wb") as f:
-            f.write(res.content)
-        print("Existing log file downloaded from Dropbox.")
-    except dropbox.exceptions.ApiError:
-        print("No previous log found. Starting fresh.")
-        with open(log_file, "wb") as f:
-            f.write(b"")  # Empty log file created
-
 try:
-    # Download the file from Dropbox
-    _, res = dbx.files_download(DROPBOX_FILE_PATH_log)
-    logging.info(f"✅ Successfully downloaded file: {DROPBOX_FILE_PATH_log}")
-    print(f"✅ Successfully downloaded file: {DROPBOX_FILE_PATH_log}")
+    metadata, res = dbx.files_download("/meds_tracker.log")
+    print('getting log')
     with open(log_file, "wb") as f:
-            f.write(res.content)
-            print("Existing log file downloaded from Dropbox.")
-    print(log_file)
-except ApiError as e:
-    logging.error(f"❌ Dropbox API error: {e}")
-    exit(1)
-except HttpError as e:
-    logging.error(f"❌ HTTP error while downloading file: {e}")
-    exit(1)
-except Exception as e:
-    logging.error(f"❌ An unexpected error occurred: {e}")
-    exit(1)
+        f.write(res.content)
+    print("Existing log file downloaded from Dropbox.")
+ except dropbox.exceptions.ApiError:
+    print("No previous log found. Starting fresh.")
+    with open(log_file, "wb") as f:
+         f.write(b"")  # Empty log file created
+
+
     
 logging.basicConfig(
     level=logging.INFO,
