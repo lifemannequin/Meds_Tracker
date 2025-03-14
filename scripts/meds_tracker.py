@@ -71,6 +71,7 @@ try:
     with open(log_file, "wb") as f:
             f.write(res.content)
             print("Existing log file downloaded from Dropbox.")
+    print(log_file)
 except ApiError as e:
     logging.error(f"❌ Dropbox API error: {e}")
     exit(1)
