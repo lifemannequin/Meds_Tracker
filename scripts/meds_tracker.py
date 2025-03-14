@@ -329,8 +329,7 @@ except Exception as e:
         logging.exception(f"An unexpected error occurred: {e}")
         
 # updating log file to dropbox
-if access_token:
-    with open(log_file, "rb") as f:
-        dbx.files_upload(f.read(), f"/{log_file}", mode=dropbox.files.WriteMode("overwrite"))
+with open(log_file, "rb") as f:
+     dbx.files_upload(f.read(), f"/{log_file}", mode=dropbox.files.WriteMode("overwrite"))
     logging.info("Updated log file uploaded to Dropbox.")
 
