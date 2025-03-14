@@ -23,9 +23,9 @@ from io import BytesIO
 
 # Read the Dropbox token from a file in your GitHub repo
 # App credentials
-APP_KEY = os.getenv("DROPBOX_APP_KEY")
-APP_SECRET = os.getenv("DROPBOX_APP_SECRET")
-REFRESH_TOKEN = os.getenv("DROPBOX_REFRESH_TOKEN")
+APP_KEY = os.getenv("DROPBOX_APP_KEY").strip()
+APP_SECRET = os.getenv("DROPBOX_APP_SECRET").strip()
+REFRESH_TOKEN = os.getenv("DROPBOX_REFRESH_TOKEN").strip()
 
 if not all([APP_KEY, APP_SECRET, REFRESH_TOKEN]):
     print("Missing environment variables!")
