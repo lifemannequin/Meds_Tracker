@@ -32,8 +32,6 @@ jobs:
         with:
           credentials_json: ${{ secrets.GOOGLE_SERVICE }}  # Use the JSON key from GitHub Secret
       
-
-
       - name: Run Python Script
         env:
           ACCOUNTS:  ${{ secrets.ACCOUNTS }}
@@ -44,6 +42,8 @@ jobs:
           DROPBOX_REFRESH_TOKEN:  ${{ secrets.DROPBOX_REFRESH_TOKEN }}}
           GOOGLE_SERVICE : ${{ secrets.GOOGLE_SERVICE }}}
         run: python scripts/meds_tracker.py
+      
+      
         
       - name: Upload debug logs (if script fails)
         if: failure()
