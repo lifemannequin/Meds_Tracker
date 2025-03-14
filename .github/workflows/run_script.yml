@@ -31,6 +31,14 @@ jobs:
         uses: google-github-actions/auth@v1
         with:
           credentials_json: ${{ secrets.GOOGLE_SERVICE }}  # Use the JSON key from GitHub Secret
+      
+      - name: print secrets
+        env:
+            MY_SECRET: ${{secrets.DROPBOX_APP_KEY}}
+           shell: bash
+          run: |
+              echo "$MY_SECRET" >> config.ini
+              cat config.ini
 
       - name: Run Python Script
         env:
