@@ -31,7 +31,7 @@ if not all([APP_KEY, APP_SECRET, REFRESH_TOKEN]):
     print("Missing environment variables!")
     exit(1)
 print('check key')
-APP_KEY == 'x66sj7ilqnzxpf0'
+PRINT(APP_KEY == 'x66sj7ilqnzxpf0')
 # Use the refresh token to get a new access token
 try:
     dbx = dropbox.Dropbox(
