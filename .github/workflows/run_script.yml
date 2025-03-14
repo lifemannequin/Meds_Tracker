@@ -26,27 +26,19 @@ jobs:
 
       - name: Install dependencies
         run: pip install -r $GITHUB_WORKSPACE/requirements.txt  # Install necessary Python libraries
-  
-      - name: Test DNS resolution
-        run: |
-          nslookup api.dropboxapi.com
-
-      - name: Test connectivity with curl
-        run: |
-          curl -I https://api.dropboxapi.com
-          
-      #- name: Test internet acces
-       # run: |
-        #   ping -c 3 api.dropboxapi.com
-         #  curl -I https://api.dropboxapi.co
 
       - name: Authenticate with Google Cloud
         uses: google-github-actions/auth@v1
         with:
-          credentials_json: ${{ secrets.GOOGLE_SERVICE }}  # Use the JSON key from GitHub Secrets
+          credentials_json: ${{ secrets.GOOGLE_SERVICE }}  # Use the JSON key from GitHub Secret
       
-      - name: Debug secret
-        run: echo "Secret is '${{ secrets.DROPBOX_APP_KEY }}' and length is ${#DROPBOX_APP_KEY}"
+      - name: print secrets
+        env:
+            MY_SECRET: ${{secrets.DROPBOX_APP_KEY}}
+           shell: bash
+          run: |
+              echo "$MY_SECRET" >> config.ini
+              cat config.ini
 
       - name: Run Python Script
         env:
