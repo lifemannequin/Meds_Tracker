@@ -44,12 +44,6 @@ jobs:
         run: python scripts/meds_tracker.py
       
       
-        
-      - name: Upload debug logs (if script fails)
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-           name: debug-logs
-           path: debug.log
+    
 
      
