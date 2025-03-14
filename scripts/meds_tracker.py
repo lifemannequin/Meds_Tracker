@@ -5,7 +5,7 @@ sends an email notification when the number of days left of medications is 10.
 The initial file has the account name, name of the medication, number of pills per boxes available,
 number of medications taken a day and when the available pills per medication were started.
 Upon reaching 0 days, the program updates the file with the current date for the start date value 
-and the countdown starts again
+and the countdown starts again.
 """
 
 import os
@@ -292,7 +292,7 @@ for index, row in data.iterrows():
         else:
             logging.warning(f"Skipping invalid email: {email}")
     else:
-        logging.info(f"Medication {row['Med_name']} has {remaining_pills} days left—no reminder needed.")
+        logging.info(f"Medication {row['Med_name']} has {remaining_days} days left—no reminder needed.")
     if remaining_days == 0:
         data.loc[index,'start_date'] = today
         logging.info(f"{row['Med_name']} has been changed")
