@@ -50,6 +50,7 @@ log_file= 'meds_tracker.log'
 DROPBOX_FILE_PATH_log = f"/{log_file}"
 
 if access_token:
+    print('it is doing')
     dbx = dropbox.Dropbox(access_token)
     print('access token done')
     try:
