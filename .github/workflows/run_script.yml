@@ -37,7 +37,7 @@ jobs:
           ACCOUNTS:  ${{ secrets.ACCOUNTS }}
           SENDER:  ${{ secrets.SENDER }}
           SENDER_CREDS:  ${{ secrets.SENDER_CREDS }}
-          DROPBOX_APP_KEY:  ${{ secrets.DROPBOX_APP_KEY }}}
+          DROPBOX_APP_KEY:  ${{ secrets.DROPBOX_APP_KEY }}
           DROPBOX_APP_SECRET:  ${{ secrets.DROPBOX_APP_SECRET }}
           DROPBOX_REFRESH_TOKEN:  ${{ secrets.DROPBOX_REFRESH_TOKEN }}
           GOOGLE_SERVICE : ${{ secrets.GOOGLE_SERVICE }}
