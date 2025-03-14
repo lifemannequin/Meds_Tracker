@@ -274,6 +274,7 @@ for index, row in data.iterrows():
     if remaining_pills == 14:
         email = jmespath.search(f" [?name == '{row['Acc_name']}'].email",accounts_info)
         if is_valid_email(email[0]):
+            print({row['Med_name']})
             body = f"Reminder: You have only {remaining_pills} pills left for {row['Med_name']}."
             send_email(email, f"Medication Reminder: {row['Med_name']}", body)
         else:
@@ -282,7 +283,7 @@ for index, row in data.iterrows():
         logging.info(f"Medication {row['Med_name']} has {remaining_pills} pills left—no reminder needed.")
     if remaining_pills == 0:
         data.loc[index,'start_date'] = today
-        logging.info(f"{row['Med_name']*} has been changed")
+        logging.info(f"{row['Med_name']} has been changed")
         print((f"{row['Med_name']*} has been changed"))
         
 #Make sure start_date is in the correct format
