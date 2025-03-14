@@ -66,6 +66,9 @@ try:
     _, res = dbx.files_download(DROPBOX_FILE_PATH_log)
     logging.info(f"✅ Successfully downloaded file: {DROPBOX_FILE_PATH_log}")
     print(f"✅ Successfully downloaded file: {DROPBOX_FILE_PATH_log}")
+     with open(log_file, "wb") as f:
+            f.write(res.content)
+        print("Existing log file downloaded from Dropbox.")
 except ApiError as e:
     logging.error(f"❌ Dropbox API error: {e}")
     exit(1)
