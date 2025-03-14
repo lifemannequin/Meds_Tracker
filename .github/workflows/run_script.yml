@@ -32,11 +32,7 @@ jobs:
         with:
           credentials_json: ${{ secrets.GOOGLE_SERVICE }}  # Use the JSON key from GitHub Secret
       
-      - name: print secrets
-        shell: bash
-        run: |
-              echo ${{secrets.DROPBOX_APP_KEY}} >> config.ini
-              cat config.ini
+
 
       - name: Run Python Script
         env:
