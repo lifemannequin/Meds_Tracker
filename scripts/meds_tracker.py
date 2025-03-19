@@ -121,26 +121,27 @@ def update_secret(new_token):
        logging.error(f"Failed to update secret: {e}")
        raise
    
-#Path to your service account JSON key file
-SERVICE_ACCOUNT_FILE = os.getenv("GOOGLE_SERVICE_KEY")
-if not SERVICE_ACCOUNT_FILE:
-    logging.error("SERVICE_ACCOUNT_FILE environment variable is not set.")
-else:
-    logging.info("SERVICE_ACCOUNT_FILE retrieved successfully.")
-
-# Parse the JSON key file
-try:
-    service_account_info = json.loads(SERVICE_ACCOUNT_FILE)
-except json.JSONDecodeError as e:
-    raise ValueError(f"Failed to parse SERVICE_ACCOUNT_key: {e}")
-    
-# Define your OAuth2 scopes
-SCOPES = ["https://www.googleapis.com/auth/gmail.send"]
 
 def get_credentials():
     """Authenticate using a service account JSON key file."""
+    # service account JSON key file
+    SERVICE_ACCOUNT_FILE = os.getenv("GOOGLE_SERVICE_KEY")
+    if not SERVICE_ACCOUNT_FILE:
+        logging.error("SERVICE_ACCOUNT_FILE environment variable is not set.")
+    else:
+        logging.info("SERVICE_ACCOUNT_FILE retrieved successfully.")
+
+    # Parse the JSON key file
     try:
-        creds = service_account.Credentials.from_service_account_file(
+        service_account_info = json.loads(SERVICE_ACCOUNT_FILE)
+    except json.JSONDecodeError as e:
+        raise ValueError(f"Failed to parse SERVICE_ACCOUNT_key: {e}")
+    
+    # Define your OAuth2 scopes
+    SCOPES = ["https://www.googleapis.com/auth/gmail.send"]
+
+    try:
+        creds = service_account.Credentials.from_service_account_info(
             SERVICE_ACCOUNT_FILE, scopes=SCOPES
         )
         logging.info("Service account credentials created successfully.")
