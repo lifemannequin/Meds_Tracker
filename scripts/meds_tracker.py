@@ -120,8 +120,8 @@ def update_secret(new_token):
        logging.error(f"Failed to update secret: {e}")
        raise
    
- Path to your service account JSON key file
-SERVICE_ACCOUNT_FILE = "path/to/service-account.json"
+#Path to your service account JSON key file
+SERVICE_ACCOUNT_FILE = os.getenv("GOOGLE_SERVICE_KEY")
 
 # Define your OAuth2 scopes
 SCOPES = ["https://www.googleapis.com/auth/gmail.send"]
