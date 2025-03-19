@@ -120,60 +120,34 @@ def update_secret(new_token):
        logging.error(f"Failed to update secret: {e}")
        raise
    
+ Path to your service account JSON key file
+SERVICE_ACCOUNT_FILE = "path/to/service-account.json"
 
-# Securely get OAuth2 credentials
+# Define your OAuth2 scopes
+SCOPES = ["https://www.googleapis.com/auth/gmail.send"]
+
 def get_credentials():
-    creds = None
-
-    # Get credentials and token from environment variables
-    credentials_json = os.getenv("SENDER_CREDS")
-    token_json = get_secret()
-
-    if not credentials_json:
-        logging.warning("SENDER_CREDS environment variable is not set.")
-    if not token_json:
-        logging.warning("GMAIL_TOKEN secret is not set or empty.")
-
-    if not credentials_json or not token_json:
-        raise ValueError("GMAIL_CREDENTIALS or GMAIL_TOKEN environment variables are not set.")
-
+    """Authenticate using a service account JSON key file."""
     try:
-        # Parse the token JSON
-        token_info = json.loads(token_json)
-    except json.JSONDecodeError as e:
-        logging.error(f"Failed to parse token JSON: {e}")
-        raise
-
-    try:
-        # Create credentials from the token info
-        creds = Credentials.from_authorized_user_info(token_info, SCOPES)
+        creds = service_account.Credentials.from_service_account_file(
+            SERVICE_ACCOUNT_FILE, scopes=SCOPES
+        )
+        logging.info("Service account credentials created successfully.")
+        return creds
     except Exception as e:
-        logging.error(f"Failed to create credentials from token: {e}")
+        logging.error(f"Failed to create service account credentials: {e}")
         raise
 
-    # Refresh or authenticate if credentials are invalid
-    if not creds or not creds.valid:
-        if creds and creds.expired and creds.refresh_token:
-            logging.warning("Credentials expired. Attempting to refresh token.")
-            try:
-                creds.refresh(Request())
-                logging.info("Token refreshed successfully.")
-            except Exception as e:
-                logging.error(f"Failed to refresh token: {e}")
-                raise
-        else:
-            logging.warning("Invalid credentials. Initiating OAuth2 flow.")
-            try:
-                flow = InstalledAppFlow.from_client_secrets_file(credentials_json, SCOPES)
-                creds = flow.run_local_server(port=0)
-                logging.info("OAuth2 flow completed successfully.")
-            except Exception as e:
-                logging.error(f"Failed to complete OAuth2 flow: {e}")
-                raise
-        update_secret(creds.to_json())
+def build_gmail_service(creds):
+    """Build the Gmail API service using the provided credentials."""
+    try:
+        service = build("gmail", "v1", credentials=creds)
+        logging.info("Gmail API service built successfully.")
+        return service
+    except Exception as e:
+        logging.error(f"Failed to build Gmail API service: {e}")
+        raise
 
-
-    return creds
 
 
 # Validate email addresses to prevent header injection
@@ -181,15 +155,11 @@ def is_valid_email(email):
     import re
     return re.match(r"^[\w\.-]+@[\w\.-]+\.\w+$", email) is not None
 
-
 # Secure function to send email
-def send_email(email, subject, body,creds):
+def send_email(email, subject, body):
     if not is_valid_email(email):
         logging.warning(f"Invalid email: {email}")
         return
-
-    creds = creds
-    service = build("gmail", "v1", credentials=creds)
     
     # Getting sender email
     try:
@@ -215,7 +185,7 @@ def send_email(email, subject, body,creds):
         logging.error(f"❌ Failed to send email to {email}: {e}")
 
 #Get the credentials to prepare to send emails and keep the token refreshed
-creds = get_credentials()
+#creds = get_credentials()
 
 # Download file into memory
 DROPBOX_FILE_PATH_meds = "/meds.csv"
