@@ -137,13 +137,6 @@ def get_credentials():
     if not credentials_json or not token_json:
         raise ValueError("GMAIL_CREDENTIALS or GMAIL_TOKEN environment variables are not set.")
 
-    """try:
-        # Parse the credentials JSON
-        credentials_info = json.loads(credentials_json)
-    except json.JSONDecodeError as e:
-        logging.error(f"Failed to parse credentials JSON: {e}")
-        raise
-    """
     try:
         # Parse the token JSON
         token_info = json.loads(token_json)
@@ -190,12 +183,12 @@ def is_valid_email(email):
 
 
 # Secure function to send email
-def send_email(email, subject, body):
+def send_email(email, subject, body,creds):
     if not is_valid_email(email):
         logging.warning(f"Invalid email: {email}")
         return
 
-    creds = get_credentials()
+    creds = creds
     service = build("gmail", "v1", credentials=creds)
     
     # Getting sender email
@@ -221,7 +214,8 @@ def send_email(email, subject, body):
     except Exception as e:
         logging.error(f"❌ Failed to send email to {email}: {e}")
 
-
+#Get the credentials to prepare to send emails and keep the token refreshed
+creds = get_credentials()
 
 # Download file into memory
 DROPBOX_FILE_PATH_meds = "/meds.csv"
@@ -287,7 +281,7 @@ for index, row in data.iterrows():
         email = jmespath.search(f" [?name == '{row['Acc_name']}'].email",accounts_info)
         if is_valid_email(email[0]):
             body = f"Reminder: You have only {remaining_days} days left for {row['Med_name']}."
-            send_email(email[0], f"Medication Reminder: {row['Med_name']}", body)
+            send_email(email[0], f"Medication Reminder: {row['Med_name']}", body,creds)
         else:
             logging.warning(f"Skipping invalid email: {email}")
     else:
