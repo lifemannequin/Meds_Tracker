@@ -127,6 +127,13 @@ if not SERVICE_ACCOUNT_FILE:
     logging.error("SERVICE_ACCOUNT_FILE environment variable is not set.")
 else:
     logging.info("SERVICE_ACCOUNT_FILE retrieved successfully.")
+
+# Parse the JSON key file
+try:
+    service_account_info = json.loads(SERVICE_ACCOUNT_JSON)
+except json.JSONDecodeError as e:
+    raise ValueError(f"Failed to parse SERVICE_ACCOUNT_JSON: {e}")
+    
 # Define your OAuth2 scopes
 SCOPES = ["https://www.googleapis.com/auth/gmail.send"]
 
