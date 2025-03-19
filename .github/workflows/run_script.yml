@@ -41,7 +41,7 @@ jobs:
           DROPBOX_APP_SECRET:  ${{ secrets.DROPBOX_APP_SECRET }}
           DROPBOX_REFRESH_TOKEN:  ${{ secrets.DROPBOX_REFRESH_TOKEN }}
           GOOGLE_SERVICE : ${{ secrets.GOOGLE_SERVICE }}
-          GOOGLE_SERVICE_KEY : ${{ secrets.GOOGLE_SERVICE_KEY }}
+          GOOGLE_SERVICE_KEY : ${{ secrets.GOOGLE_SEVICE_KEY }}
         run: python scripts/meds_tracker.py
       
       
