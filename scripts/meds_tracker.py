@@ -142,7 +142,7 @@ def get_credentials():
 
     try:
         creds = service_account.Credentials.from_service_account_info(
-            SERVICE_ACCOUNT_FILE, scopes=SCOPES
+            service_account_info, scopes=SCOPES
         )
         logging.info("Service account credentials created successfully.")
         return creds
