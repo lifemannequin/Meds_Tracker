@@ -177,7 +177,9 @@ def send_email(email, subject, body):
     # Encode message
     raw = base64.urlsafe_b64encode(msg.as_bytes()).decode()
     message = {"raw": raw}
-
+    
+    creds = get_credentials()
+    service = build_gmail_service(creds)
     try:
         service.users().messages().send(userId="me", body=message).execute()
         logging.info(f"✅ Email sent successfully to {email}")
