@@ -130,7 +130,7 @@ else:
 
 # Parse the JSON key file
 try:
-    service_account_info = json.loads(SERVICE_ACCOUNT_KEY)
+    service_account_info = json.loads(SERVICE_ACCOUNT_FILE)
 except json.JSONDecodeError as e:
     raise ValueError(f"Failed to parse SERVICE_ACCOUNT_key: {e}")
     
