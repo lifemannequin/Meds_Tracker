@@ -130,9 +130,9 @@ else:
 
 # Parse the JSON key file
 try:
-    service_account_info = json.loads(SERVICE_ACCOUNT_JSON)
+    service_account_info = json.loads(SERVICE_ACCOUNT_KEY)
 except json.JSONDecodeError as e:
-    raise ValueError(f"Failed to parse SERVICE_ACCOUNT_JSON: {e}")
+    raise ValueError(f"Failed to parse SERVICE_ACCOUNT_key: {e}")
     
 # Define your OAuth2 scopes
 SCOPES = ["https://www.googleapis.com/auth/gmail.send"]
