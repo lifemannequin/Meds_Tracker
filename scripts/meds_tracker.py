@@ -123,10 +123,10 @@ def update_secret(new_token):
    
 #Path to your service account JSON key file
 SERVICE_ACCOUNT_FILE = os.getenv("GOOGLE_SERVICE_KEY")
-if not SERVICE_ACCOUNT_JSON:
-    logging.error("SERVICE_ACCOUNT_JSON environment variable is not set.")
+if not SERVICE_ACCOUNT_FILE:
+    logging.error("SERVICE_ACCOUNT_FILE environment variable is not set.")
 else:
-    logging.info("SERVICE_ACCOUNT_JSON retrieved successfully.")
+    logging.info("SERVICE_ACCOUNT_FILE retrieved successfully.")
 # Define your OAuth2 scopes
 SCOPES = ["https://www.googleapis.com/auth/gmail.send"]
 
