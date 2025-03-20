@@ -171,13 +171,7 @@ def get_credentials():
         logging.error(f"Failed to refresh token: {e}")
         raise
      
-   """try:
-         flow = InstalledAppFlow.from_client_config(creds_info, SCOPES)
-         creds = flow.run_local_server(port=0, access_type='offline', prompt='consent')
-         logging.info("OAuth2 flow completed successfully.")
-    except Exception as e:
-         logging.error(f"Failed to complete OAuth2 flow: {e}")
-         raise"""
+  
     update_secret(creds.to_json())
 
 
