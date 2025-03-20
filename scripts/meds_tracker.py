@@ -168,7 +168,7 @@ def get_credentials():
          flow = InstalledAppFlow.from_client_secrets_file(credentials_json, SCOPES)
          creds = flow.run_local_server(port=0)
          logging.info("OAuth2 flow completed successfully.")
-     except Exception as e:
+    except Exception as e:
          logging.error(f"Failed to complete OAuth2 flow: {e}")
          raise
     update_secret(creds.to_json())
