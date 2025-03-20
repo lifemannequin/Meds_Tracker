@@ -153,7 +153,7 @@ def get_credentials():
 
     # Refresh or authenticate if credentials are invalid
     if not creds or not creds.valid:
-        logging.warning('Credentials not valid")
+        logging.warning("Credentials not valid")
     if creds and creds.expired and creds.refresh_token:
         logging.warning("Credentials expired. Attempting to refresh token.")
         
