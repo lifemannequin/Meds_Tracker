@@ -139,7 +139,7 @@ def get_credentials():
 
     try:
         # Parse the creds JSON
-        creds_info = json.loads(creds_json)
+        creds_info = json.loads(credentials_json)
     except json.JSONDecodeError as e:
         logging.error(f"Failed to parse credentials JSON: {e}")
         raise
