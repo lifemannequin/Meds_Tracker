@@ -172,7 +172,7 @@ def get_credentials():
         raise
      
     try:
-         flow = InstalledAppFlow.from_client_secrets_info(creds_info, SCOPES)
+         flow = InstalledAppFlow.from_client_config(creds_info, SCOPES)
          creds = flow.run_local_server(port=0, access_type='offline', prompt='consent')
          logging.info("OAuth2 flow completed successfully.")
     except Exception as e:
