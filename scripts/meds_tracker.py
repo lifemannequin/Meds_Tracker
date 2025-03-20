@@ -153,15 +153,18 @@ def get_credentials():
 
     # Refresh or authenticate if credentials are invalid
     if not creds or not creds.valid:
-        if creds and creds.expired and creds.refresh_token:
-            logging.warning("Credentials expired. Attempting to refresh token.")
+        logging.warning('Credentials not valid")
+    if creds and creds.expired and creds.refresh_token:
+        logging.warning("Credentials expired. Attempting to refresh token.")
+        
     try:
         creds.refresh(Request())
         logging.info("Token refreshed successfully.")
     except Exception as e:
         logging.error(f"Failed to refresh token: {e}")
         raise
-     try:
+     
+    try:
          flow = InstalledAppFlow.from_client_secrets_file(credentials_json, SCOPES)
          creds = flow.run_local_server(port=0)
          logging.info("OAuth2 flow completed successfully.")
