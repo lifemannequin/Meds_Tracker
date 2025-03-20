@@ -138,6 +138,13 @@ def get_credentials():
         raise ValueError("GMAIL_CREDENTIALS or GMAIL_TOKEN environment variables are not set.")
 
     try:
+        # Parse the creds JSON
+        creds_info = json.loads(creds_json)
+    except json.JSONDecodeError as e:
+        logging.error(f"Failed to parse credentials JSON: {e}")
+        raise
+        
+    try:
         # Parse the token JSON
         token_info = json.loads(token_json)
     except json.JSONDecodeError as e:
@@ -165,7 +172,7 @@ def get_credentials():
         raise
      
     try:
-         flow = InstalledAppFlow.from_client_secrets_file(credentials_json, SCOPES)
+         flow = InstalledAppFlow.from_client_secrets_info(creds_info, SCOPES)
          creds = flow.run_local_server(port=0, access_type='offline', prompt='consent')
          logging.info("OAuth2 flow completed successfully.")
     except Exception as e:
