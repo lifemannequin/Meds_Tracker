@@ -277,7 +277,7 @@ except json.JSONDecodeError as e:
 
 # Check remaining pills and send reminders
 for index, row in data.iterrows():
-    remaining_days = int((row["N_pills"] - pills_taken[index])/row['pills_per_day'])
+    remaining_days = int((row["N_pills"] - pills_taken[index]*row['pills_per_day'])/row['pills_per_day'])
     
     if remaining_days == 10:
         email = jmespath.search(f"Accounts[?name == '{row['Acc_name']}'].email",accounts_info)
