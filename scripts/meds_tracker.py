@@ -318,7 +318,13 @@ except dropbox.exceptions.HttpError as e:
         logging.error(f"HTTP error occurred: {e}")
 except Exception as e:
         logging.exception(f"An unexpected error occurred: {e}")
-        
+
+if is_valid_email(sender_email):
+            body =  f"/{log_file}"
+            send_email(sender_email, "Meds Tracker Daily Log", body,creds)
+        else:
+            logging.warning(f"Skipping invalid email: {email}")
+
 # updating log file to dropbox
 with open(log_file, "rb") as f:
      dbx.files_upload(f.read(), f"/{log_file}", mode=dropbox.files.WriteMode("overwrite"))
