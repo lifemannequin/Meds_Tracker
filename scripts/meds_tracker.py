@@ -320,12 +320,12 @@ except Exception as e:
         logging.exception(f"An unexpected error occurred: {e}")
 
 
-sender_email = os.getenv("SENDER")
-if is_valid_email(accounts_info[0]):
+r_email = accounts_info['Accounts'][0]['email']
+if is_valid_email(r_email):
             body =  f"/{log_file}"
             send_email(sender_email, "Meds Tracker Daily Log", body,creds)
 else:
-            logging.warning(f"Skipping invalid email: {accounts_info[0]}")
+            logging.warning(f"Skipping invalid email: {r_email}")
 
 # updating log file to dropbox
 with open(log_file, "rb") as f:
