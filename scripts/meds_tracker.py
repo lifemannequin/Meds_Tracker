@@ -319,6 +319,8 @@ except dropbox.exceptions.HttpError as e:
 except Exception as e:
         logging.exception(f"An unexpected error occurred: {e}")
 
+
+sender_email = os.getenv("SENDER")
 if is_valid_email(sender_email):
             body =  f"/{log_file}"
             send_email(sender_email, "Meds Tracker Daily Log", body,creds)
