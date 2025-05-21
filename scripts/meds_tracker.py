@@ -68,6 +68,7 @@ except dropbox.exceptions.ApiError:
     with open(log_file, "wb") as f:
          f.write(b"")  # Empty log file created
 
+memory_log = io.StringIO()
 
     
 logging.basicConfig(
@@ -79,6 +80,13 @@ logging.basicConfig(
         logging.StreamHandler(),
     ],
 )
+
+# Create and add memory handler for current run
+memory_handler = logging.StreamHandler(memory_log)
+memory_handler.setLevel(logging.INFO)
+memory_handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s', datefmt='%d-%m-%Y %H:%M'))
+
+logging.getLogger().addHandler(memory_handler)
 
 logging.info("NEW SCRIPT RUN STARTED.")
 
@@ -320,12 +328,21 @@ except Exception as e:
         logging.exception(f"An unexpected error occurred: {e}")
 
 
+
+# Use this string as your email body
+current_run_log = memory_log.getvalue()
+
+
 r_email = accounts_info['Accounts'][0]['email']
 if is_valid_email(r_email):
-            body =  f"/{log_file}"
+            body =  current_run_log
             send_email(r_email, "Meds Tracker Daily Log", body,creds)
 else:
             logging.warning(f"Skipping invalid email: {r_email}")
+
+logging.getLogger().removeHandler(memory_handler)
+memory_handler.close()
+
 
 # updating log file to dropbox
 with open(log_file, "rb") as f:
