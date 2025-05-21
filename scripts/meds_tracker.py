@@ -323,7 +323,7 @@ except Exception as e:
 r_email = accounts_info['Accounts'][0]['email']
 if is_valid_email(r_email):
             body =  f"/{log_file}"
-            send_email(sender_email, "Meds Tracker Daily Log", body,creds)
+            send_email(r_email, "Meds Tracker Daily Log", body,creds)
 else:
             logging.warning(f"Skipping invalid email: {r_email}")
 
