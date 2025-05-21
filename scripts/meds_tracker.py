@@ -321,11 +321,11 @@ except Exception as e:
 
 
 sender_email = os.getenv("SENDER")
-if is_valid_email(sender_email):
+if is_valid_email(accounts_info[0]):
             body =  f"/{log_file}"
             send_email(sender_email, "Meds Tracker Daily Log", body,creds)
 else:
-            logging.warning(f"Skipping invalid email: {sender_email}")
+            logging.warning(f"Skipping invalid email: {accounts_info[0]}")
 
 # updating log file to dropbox
 with open(log_file, "rb") as f:
