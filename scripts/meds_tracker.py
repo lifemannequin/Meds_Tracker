@@ -90,6 +90,8 @@ logging.getLogger().addHandler(memory_handler)
 
 logging.info("NEW SCRIPT RUN STARTED.")
 
+
+"""
 # Secure OAuth2 Scopes (Least Privilege)
 SCOPES = ["https://www.googleapis.com/auth/gmail.send"]
 
@@ -184,6 +186,8 @@ def get_credentials():
 
 
     return creds
+"""
+
 
 
 # Validate email addresses to prevent header injection
@@ -197,10 +201,10 @@ def send_email(email, subject, body,creds):
     if not is_valid_email(email):
         logging.warning(f"Invalid email: {email}")
         return
-
+    """
     creds = creds
     service = build("gmail", "v1", credentials=creds)
-    
+    """
     # Getting sender email
     try:
         # Parse the sender JSON
@@ -208,15 +212,22 @@ def send_email(email, subject, body,creds):
     except json.JSONDecodeError as e:
         logging.error(f"Failed to parse sender JSON: {e}")
         raise
-        
+    server_address: smtp.mail.yahoo.com
+          server_port: 587
+          username = os.getenv("SENDER")
+          password = os.getenv("YAHOO_MAIL")
+          
     msg = MIMEText(body)
     msg["to"] = email
     msg["subject"] = subject
-    msg["from"] = sender_email
+    msg["from"] = username
 
     # Encode message
     raw = base64.urlsafe_b64encode(msg.as_bytes()).decode()
     message = {"raw": raw}
+    # Security (Important!)
+    secure= true
+    require_tls = true # Use TLS encryption
 
     try:
         service.users().messages().send(userId="me", body=message).execute()
