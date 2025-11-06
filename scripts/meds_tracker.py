@@ -235,14 +235,7 @@ def send_email(email, subject, body):
     except Exception as e:
         print(f"Failed to send email: {str(e)}")
         raise
-   """
-
-    try:
-        service.users().messages().send(userId="me", body=message).execute()
-        logging.info(f"✅ Email sent successfully")
-    except Exception as e:
-        logging.error(f"❌ Failed to send email: {e}")
-"""
+ 
 #Get the credentials to prepare to send emails and keep the token refreshed
 "creds = get_credentials()"
 
