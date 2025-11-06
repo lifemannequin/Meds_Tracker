@@ -236,7 +236,9 @@ def send_email(email, subject, body):
     except Exception as e:
         print(f"Failed to send email: {str(e)}")
         raise
- 
+ username = os.getenv("SENDER")
+ password = os.getenv("YAHOO_MAIL")
+ print(username)   
 #Get the credentials to prepare to send emails and keep the token refreshed
 "creds = get_credentials()"
 
@@ -303,7 +305,6 @@ for index, row in data.iterrows():
     if remaining_days == 10:
         email = jmespath.search(f"Accounts[?name == '{row['Acc_name']}'].email",accounts_info)
         if is_valid_email(email[0]):
-            print(email[0])
             body = f"Reminder: You have only {remaining_days} days left for {row['Med_name']}."
             send_email(str(email[0]), f"Medication Reminder: {row['Med_name']}", body)
         else:
