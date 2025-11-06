@@ -21,6 +21,7 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 from googleapiclient.discovery import build
 from google.cloud import secretmanager
 from io import BytesIO
