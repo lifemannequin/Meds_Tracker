@@ -40,7 +40,7 @@ jobs:
           DROPBOX_APP_KEY:  ${{ secrets.DROPBOX_APP_KEY }}
           DROPBOX_APP_SECRET:  ${{ secrets.DROPBOX_APP_SECRET }}
           DROPBOX_REFRESH_TOKEN:  ${{ secrets.DROPBOX_REFRESH_TOKEN }}
-          GOOGLE_SERVICE : ${{ secrets.GOOGLE_SERVICE }}
+          YAHOO_MAIL : ${{ secrets.YAHOO_MAIL }}
         run: python scripts/meds_tracker.py
       
       
