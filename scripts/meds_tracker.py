@@ -241,7 +241,7 @@ def send_email(email, subject, body):
  
 #Get the credentials to prepare to send emails and keep the token refreshed
 "creds = get_credentials()"
-print(str(USERNAME))
+loggng.info(f"{str(USERNAME)}")
 # Download file into memory
 DROPBOX_FILE_PATH_meds = "/meds.csv"
 try:
