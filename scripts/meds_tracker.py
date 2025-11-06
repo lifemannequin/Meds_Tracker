@@ -303,6 +303,7 @@ for index, row in data.iterrows():
     if remaining_days == 10:
         email = jmespath.search(f"Accounts[?name == '{row['Acc_name']}'].email",accounts_info)
         if is_valid_email(email[0]):
+            print(email[0])
             body = f"Reminder: You have only {remaining_days} days left for {row['Med_name']}."
             send_email(str(email[0]), f"Medication Reminder: {row['Med_name']}", body)
         else:
