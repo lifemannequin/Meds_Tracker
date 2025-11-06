@@ -33,7 +33,7 @@ APP_SECRET = os.getenv("DROPBOX_APP_SECRET")
 REFRESH_TOKEN = os.getenv("DROPBOX_REFRESH_TOKEN")
 USERNAME = os.getenv("SENDER")
 PASSWORD = os.getenv("YAHOO_MAIL")
-print(USERNAME)   
+ 
 if not all([APP_KEY, APP_SECRET, REFRESH_TOKEN]):
     print("Missing environment variables!")
     exit(1)
@@ -215,8 +215,8 @@ def send_email(email, subject, body):
         logging.error(f"Failed to parse sender JSON: {e}")
         raise
  
-    username =USERNAME
-    password = PASSWORD
+    username = str(USERNAME)
+    password = str(PASSWORD)
     print(username)  
     msg = MIMEText(body)
     msg["to"] = email
@@ -241,7 +241,7 @@ def send_email(email, subject, body):
  
 #Get the credentials to prepare to send emails and keep the token refreshed
 "creds = get_credentials()"
-
+print(str(USERNAME))
 # Download file into memory
 DROPBOX_FILE_PATH_meds = "/meds.csv"
 try:
