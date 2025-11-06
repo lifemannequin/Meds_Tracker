@@ -238,9 +238,7 @@ def send_email(email, subject, body):
     except Exception as e:
         print(f"Failed to send email: {str(e)}")
         raise
- username = os.getenv("SENDER")
- password = os.getenv("YAHOO_MAIL")
- print(username)   
+ 
 #Get the credentials to prepare to send emails and keep the token refreshed
 "creds = get_credentials()"
 
