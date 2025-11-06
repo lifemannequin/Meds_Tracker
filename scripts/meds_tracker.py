@@ -24,6 +24,7 @@ from email.mime.text import MIMEText
 from googleapiclient.discovery import build
 from google.cloud import secretmanager
 from io import BytesIO
+import smtplib
 
 # Read the Dropbox token from a file in your GitHub repo
 # App credentials
