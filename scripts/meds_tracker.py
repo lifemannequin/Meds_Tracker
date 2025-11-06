@@ -31,7 +31,9 @@ import smtplib
 APP_KEY =os.getenv("DROPBOX_APP_KEY")
 APP_SECRET = os.getenv("DROPBOX_APP_SECRET")
 REFRESH_TOKEN = os.getenv("DROPBOX_REFRESH_TOKEN")
-
+username = os.getenv("SENDER")
+password = os.getenv("YAHOO_MAIL")
+print(username)   
 if not all([APP_KEY, APP_SECRET, REFRESH_TOKEN]):
     print("Missing environment variables!")
     exit(1)
