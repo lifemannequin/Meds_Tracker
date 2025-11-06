@@ -215,7 +215,7 @@ def send_email(email, subject, body):
         logging.error(f"Failed to parse sender JSON: {e}")
         raise
  
-    username = "medstracker@yahoo.com" # str(USERNAME)
+    username = "medstracker" # str(USERNAME)
     password = "yskeuabczzxnclai" #  str(PASSWORD)
     print(username)  
     msg = MIMEText(body)
