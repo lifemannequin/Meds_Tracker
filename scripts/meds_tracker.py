@@ -346,7 +346,7 @@ current_run_log = memory_log.getvalue()
 r_email = accounts_info['Accounts'][0]['email']
 if is_valid_email(r_email):
             body =  current_run_log
-            send_email(r_email, "Meds Tracker Daily Log", body,creds)
+            send_email(r_email, "Meds Tracker Daily Log", body)
 else:
             logging.warning(f"Skipping invalid email: {r_email}")
 
