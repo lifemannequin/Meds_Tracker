@@ -216,7 +216,7 @@ def send_email(email, subject, body):
         raise
  
     username = "medstracker@yahoo.com" # str(USERNAME)
-    password = str(PASSWORD)
+    password = "yskeuabczzxnclai" #  str(PASSWORD)
     print(username)  
     msg = MIMEText(body)
     msg["to"] = email
