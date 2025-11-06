@@ -98,7 +98,7 @@ SCOPES = ["https://www.googleapis.com/auth/gmail.send"]
 SECRET_NAME = "GMAIL_TOKEN"  # The name of your secret in Google Cloud
 PROJECT_ID = "medstracker-452518"
 
-
+"""
 def get_secret():
     """Retrieve refresh token from Google Cloud Secret Manager."""
     try:
@@ -186,7 +186,6 @@ def get_credentials():
 
 
     return creds
-"""
 
 
 
@@ -197,7 +196,7 @@ def is_valid_email(email):
 
 
 # Secure function to send email
-def send_email(email, subject, body,creds):
+def send_email(email, subject, body):
     if not is_valid_email(email):
         logging.warning(f"Invalid email: {email}")
         return
@@ -302,7 +301,7 @@ for index, row in data.iterrows():
         email = jmespath.search(f"Accounts[?name == '{row['Acc_name']}'].email",accounts_info)
         if is_valid_email(email[0]):
             body = f"Reminder: You have only {remaining_days} days left for {row['Med_name']}."
-            send_email(email[0], f"Medication Reminder: {row['Med_name']}", body,creds)
+            send_email(email[0], f"Medication Reminder: {row['Med_name']}", body)
         else:
             logging.warning(f"Skipping invalid email: {email}")
     else:
