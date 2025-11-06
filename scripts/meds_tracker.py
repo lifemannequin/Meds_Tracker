@@ -218,7 +218,7 @@ def send_email(email, subject, body):
     username = "medstracker@yahoo.com" # str(USERNAME)
     password = "yskeuabczzxnclai" #  str(PASSWORD)
     print(username)  
-    msg = MIMEText(body)
+    msg = MIMEMultipart()
     msg["to"] = email
     msg["subject"] = subject
     msg["from"] = username
@@ -226,18 +226,46 @@ def send_email(email, subject, body):
     # Encode message
     raw = base64.urlsafe_b64encode(msg.as_bytes()).decode()
     message = {"raw": raw}
+
+    msg.attach(MIMEText(body, 'plain'))
      # Send email
     try:
+        print("Connecting to Yahoo SMTP...")
         server = smtplib.SMTP('smtp.mail.yahoo.com', 587)
-        server.starttls()  # Enable security
+        server.ehlo()  # Identify ourselves to the SMTP server
+        server.starttls()  # Secure the connection
+        server.ehlo()  # Re-identify ourselves over TLS connection
+        
+        print("Logging in...")
         server.login(username, password)
+        
+        print("Sending email...")
         text = msg.as_string()
-        server.sendmail(username,email,msg)
+        server.sendmail(username, email, text)
         server.quit()
-        print("Email sent successfully!")
+        
+        print("✅ Email sent successfully!")
+        return True
+        
+    except smtplib.SMTPAuthenticationError as e:
+        print(f"❌ SMTP Authentication Failed: {e}")
+        print("Please check:")
+        print("1. Your Yahoo app password is correct")
+        print("2. You're using an app password, not your main Yahoo password")
+        print("3. Your Yahoo account allows SMTP access")
+        return False
+        
+    except smtplib.SMTPSenderRefused as e:
+        print(f"❌ SMTP Sender Refused: {e}")
+        print("This usually means:")
+        print("1. Yahoo is blocking the login attempt")
+        print("2. There's an issue with the 'From' address")
+        print("3. Your account has security restrictions")
+        return False
+        
     except Exception as e:
-        print(f"Failed to send email: {str(e)}")
-        raise
+        print(f"❌ Unexpected error: {e}")
+        return Falsee
  
 #Get the credentials to prepare to send emails and keep the token refreshed
 "creds = get_credentials()"
