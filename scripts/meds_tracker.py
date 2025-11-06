@@ -235,7 +235,7 @@ def send_email(email, subject, body):
         logging.error(f"❌ Failed to send email: {e}")
 
 #Get the credentials to prepare to send emails and keep the token refreshed
-creds = get_credentials()
+"creds = get_credentials()"
 
 # Download file into memory
 DROPBOX_FILE_PATH_meds = "/meds.csv"
