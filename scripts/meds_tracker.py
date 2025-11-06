@@ -215,7 +215,7 @@ def send_email(email, subject, body):
  
     username = os.getenv("SENDER")
     password = os.getenv("YAHOO_MAIL")
-          
+    print(username)  
     msg = MIMEText(body)
     msg["to"] = email
     msg["subject"] = subject
