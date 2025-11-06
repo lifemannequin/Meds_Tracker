@@ -225,8 +225,8 @@ def send_email(email, subject, body):
     raw = base64.urlsafe_b64encode(msg.as_bytes()).decode()
     message = {"raw": raw}
     # Security (Important!)
-    secure= true
-    require_tls = true # Use TLS encryption
+    secure= True
+    require_tls = True # Use TLS encryption
 
     try:
         service.users().messages().send(userId="me", body=message).execute()
