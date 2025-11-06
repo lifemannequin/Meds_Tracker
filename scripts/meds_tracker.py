@@ -211,8 +211,7 @@ def send_email(email, subject, body):
     except json.JSONDecodeError as e:
         logging.error(f"Failed to parse sender JSON: {e}")
         raise
-    server_address: smtp.mail.yahoo.com
-    server_port: 587
+ 
     username = os.getenv("SENDER")
     password = os.getenv("YAHOO_MAIL")
           
@@ -224,16 +223,26 @@ def send_email(email, subject, body):
     # Encode message
     raw = base64.urlsafe_b64encode(msg.as_bytes()).decode()
     message = {"raw": raw}
-    # Security (Important!)
-    secure= True
-    require_tls = True # Use TLS encryption
+     # Send email
+    try:
+        server = smtplib.SMTP('smtp.mail.yahoo.com', 587)
+        server.starttls()  # Enable security
+        server.login(username, password)
+        text = msg.as_string()
+        server.sendmail(username,email, message)
+        server.quit()
+        print("Email sent successfully!")
+    except Exception as e:
+        print(f"Failed to send email: {str(e)}")
+        raise
+   """
 
     try:
         service.users().messages().send(userId="me", body=message).execute()
         logging.info(f"✅ Email sent successfully")
     except Exception as e:
         logging.error(f"❌ Failed to send email: {e}")
-
+"""
 #Get the credentials to prepare to send emails and keep the token refreshed
 "creds = get_credentials()"
 
