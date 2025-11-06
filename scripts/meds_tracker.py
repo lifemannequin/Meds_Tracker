@@ -215,7 +215,7 @@ def send_email(email, subject, body):
         logging.error(f"Failed to parse sender JSON: {e}")
         raise
  
-    username = "medstracker" # str(USERNAME)
+    username = "medstracker@yahoo.com" # str(USERNAME)
     password = "yskeuabczzxnclai" #  str(PASSWORD)
     print(username)  
     msg = MIMEText(body)
@@ -232,7 +232,7 @@ def send_email(email, subject, body):
         server.starttls()  # Enable security
         server.login(username, password)
         text = msg.as_string()
-        server.sendmail(username,email, message)
+        server.sendmail(username,email,msg)
         server.quit()
         print("Email sent successfully!")
     except Exception as e:
