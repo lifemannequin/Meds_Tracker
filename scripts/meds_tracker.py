@@ -212,9 +212,9 @@ def send_email(email, subject, body):
         logging.error(f"Failed to parse sender JSON: {e}")
         raise
     server_address: smtp.mail.yahoo.com
-          server_port: 587
-          username = os.getenv("SENDER")
-          password = os.getenv("YAHOO_MAIL")
+    server_port: 587
+    username = os.getenv("SENDER")
+    password = os.getenv("YAHOO_MAIL")
           
     msg = MIMEText(body)
     msg["to"] = email
