@@ -215,8 +215,10 @@ def send_email(email, subject, body):
         logging.error(f"Failed to parse sender JSON: {e}")
         raise
 
-    username = str(os.getenv("SENDER").strip())
-    password = str( os.getenv("YAHOO_MAIL").strip())
+    #username = str(os.getenv("SENDER").strip())
+    #password = str( os.getenv("YAHOO_MAIL").strip())
+    username = os.environ.get('SENDER', '').strip()
+    password = os.environ.get('YAHOO_MAIL', '').strip()
     print(f"Debug: Username length: {len(username)}")
     print(f"Debug: Password length: {len(password)}")
     print(f"Debug: Username repr: {repr(username)}")
@@ -269,7 +271,7 @@ def send_email(email, subject, body):
         
     except Exception as e:
         print(f"❌ Unexpected error: {e}")
-        return Falsee
+        return False
  
 #Get the credentials to prepare to send emails and keep the token refreshed
 "creds = get_credentials()"
