@@ -32,8 +32,7 @@ import smtplib
 APP_KEY =os.getenv("DROPBOX_APP_KEY")
 APP_SECRET = os.getenv("DROPBOX_APP_SECRET")
 REFRESH_TOKEN = os.getenv("DROPBOX_REFRESH_TOKEN")
-USERNAME = os.getenv("SENDER")
-PASSWORD = os.getenv("YAHOO_MAIL")
+
  
 if not all([APP_KEY, APP_SECRET, REFRESH_TOKEN]):
     print("Missing environment variables!")
@@ -215,9 +214,9 @@ def send_email(email, subject, body):
     except json.JSONDecodeError as e:
         logging.error(f"Failed to parse sender JSON: {e}")
         raise
- 
-    username = str(USERNAME.strip())
-    password = str(PASSWORD.strip())
+
+    username = str(os.getenv("SENDER").strip())
+    password = str( os.getenv("YAHOO_MAIL").strip())
     print(f"Debug: Username length: {len(username)}")
     print(f"Debug: Password length: {len(password)}")
     print(f"Debug: Username repr: {repr(username)}")
