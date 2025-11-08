@@ -219,10 +219,6 @@ def send_email(email, subject, body):
     #password = str( os.getenv("YAHOO_MAIL").strip())
     username = os.environ.get('SENDER', '').strip()
     password = os.environ.get('YAHOO_MAIL', '').strip()
-    print(f"Debug: Username length: {len(username)}")
-    print(f"Debug: Password length: {len(password)}")
-    print(f"Debug: Username repr: {repr(username)}")
-    print(f"Debug: Password repr: {repr(password)}")
     
     msg = MIMEMultipart()
     msg["to"] = email
@@ -235,18 +231,21 @@ def send_email(email, subject, body):
 
     msg.attach(MIMEText(body, 'plain'))
      # Send email
+    # Send email
     try:
-        print("Connecting to Yahoo SMTP...")
-        server = smtplib.SMTP('smtp.mail.yahoo.com', 587)
-        server.ehlo()  # Identify ourselves to the SMTP server
-        server.starttls()  # Secure the connection
-        server.ehlo()  # Re-identify ourselves over TLS connection
+        print("1. Connecting to Yahoo SMTP...")
+        server = smtplib.SMTP('smtp.mail.yahoo.com', 587, timeout=30)
         
-        print("Logging in...")
+        print("2. Starting TLS...")
+        server.ehlo()
+        server.starttls()
+        server.ehlo()
+        
+        print("3. Logging in...")
         server.login(username, password)
         
-        print("Sending email...")
-        text = msg.as_string()
+        print("4. Sending email...")
+        text = msg.as_string()  # Convert the complete message to string
         server.sendmail(username, email, text)
         server.quit()
         
@@ -318,7 +317,7 @@ except Exception as e:
 data["start_date"] = pd.to_datetime(data["start_date"], format="%d-%m-%Y")
 today = pd.Timestamp.today().normalize()
 pills_taken = (today - data["start_date"]).dt.days.astype(int)*data['pills_per_day']
-print(today,data['start_date'],today - data["start_date"])
+
 
 accounts_json = os.getenv("ACCOUNTS")
 if not accounts_json:
@@ -335,7 +334,7 @@ except json.JSONDecodeError as e:
 # Check remaining pills and send reminders
 for index, row in data.iterrows():
     remaining_days = int((row["N_pills"] - pills_taken[index])/row['pills_per_day'])
-    #print(row["N_pills"], pills_taken[index],row['pills_per_day'])
+    
     if remaining_days == 10:
         email = jmespath.search(f"Accounts[?name == '{row['Acc_name']}'].email",accounts_info)
         if is_valid_email(email[0]):
