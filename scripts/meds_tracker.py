@@ -318,7 +318,7 @@ except Exception as e:
 data["start_date"] = pd.to_datetime(data["start_date"], format="%d-%m-%Y")
 today = pd.Timestamp.today().normalize()
 pills_taken = data['pills_per_day']*(today - data["start_date"]).dt.days.astype(int)
-
+print(today,data['start_date'],today - data["start_date"])
 
 accounts_json = os.getenv("ACCOUNTS")
 if not accounts_json:
@@ -335,7 +335,7 @@ except json.JSONDecodeError as e:
 # Check remaining pills and send reminders
 for index, row in data.iterrows():
     remaining_days = int((row["N_pills"] - pills_taken[index])/row['pills_per_day'])
-    print(row["N_pills"], pills_taken[index],row['pills_per_day'])
+    #print(row["N_pills"], pills_taken[index],row['pills_per_day'])
     if remaining_days == 10:
         email = jmespath.search(f"Accounts[?name == '{row['Acc_name']}'].email",accounts_info)
         if is_valid_email(email[0]):
