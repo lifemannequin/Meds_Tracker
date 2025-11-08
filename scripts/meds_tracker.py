@@ -221,16 +221,12 @@ def send_email(email, subject, body):
     password = os.environ.get('YAHOO_MAIL', '').strip()
     
     msg = MIMEMultipart()
-    msg["to"] = email
-    msg["subject"] = subject
-    msg["from"] = username
-
-    # Encode message
-    raw = base64.urlsafe_b64encode(msg.as_bytes()).decode()
-    message = {"raw": raw}
+    msg["To"] = email
+    msg["Subject"] = subject
+    msg["From"] = username
 
     msg.attach(MIMEText(body, 'plain'))
-     # Send email
+    
     # Send email
     try:
         print("1. Connecting to Yahoo SMTP...")
