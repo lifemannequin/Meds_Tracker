@@ -217,7 +217,7 @@ def send_email(email, subject, body):
 
     #username = str(os.getenv("SENDER").strip())
     #password = str( os.getenv("YAHOO_MAIL").strip())
-    username = os.environ.get('SENDER', '').strip()
+    username = 'medstracker@yahoo.com' #os.environ.get('SENDER', '').strip()
     password = os.environ.get('YAHOO_MAIL', '').strip()
     
     msg = MIMEMultipart()
