@@ -317,7 +317,7 @@ except Exception as e:
 # Calculate medication end date
 data["start_date"] = pd.to_datetime(data["start_date"], format="%d-%m-%Y")
 today = pd.Timestamp.today().normalize()
-pills_taken = data['pills_per_day']*(today - data["start_date"]).dt.days.astype(int)
+pills_taken = (today - data["start_date"]).dt.days.astype(int)/data['pills_per_day']
 print(today,data['start_date'],today - data["start_date"])
 
 accounts_json = os.getenv("ACCOUNTS")
